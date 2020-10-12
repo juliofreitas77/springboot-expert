@@ -30,10 +30,32 @@ public class VendasApplication {
 
             List<Cliente> todosClientes = clientesRepository.obterTodos();
             todosClientes.forEach(System.out::println);
+
+            System.out.println("Atualizando clientes");
+            todosClientes.forEach(c -> {
+                c.setNome(c.getNome() + " atualizado.");
+                clientesRepository.atualizar(c);
+            });
+
+            todosClientes = clientesRepository.obterTodos();
+            todosClientes.forEach(System.out::println);
+
+            System.out.println("deletando clientes");
+            clientesRepository.obterTodos().forEach(c -> {
+                clientesRepository.deletar(c);
+            });
+
+            todosClientes = clientesRepository.obterTodos();
+            if(todosClientes.isEmpty()){
+                System.out.println("Nenhum cliente encontrado.");
+            }else{
+                todosClientes.forEach(System.out::println);
+            }
         };
     }
 
-    public static void main(String[] args) {
-        SpringApplication.run(VendasApplication.class, args);
+
+        public static void main (String[]args){
+            SpringApplication.run(VendasApplication.class, args);
+        }
     }
-}
